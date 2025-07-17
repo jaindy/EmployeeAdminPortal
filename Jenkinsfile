@@ -44,21 +44,13 @@ pipeline {
         }
     }
 
-   post {
+post {
         always {
-            script {
-                // Capture and send console output
-                def consoleOutput = currentBuild.rawBuild.getLog(1000).join('\n')
-                emailext (
-                    subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
-                    body: """
-                        <p>Build Status: ${currentBuild.currentResult}</p>
-                        <pre>${consoleOutput}</pre>
-                    """,
-                    mimeType: 'text/html',
-                    to: 'divyani.jain12627@gmail.com'
-                )
-            }
+            emailext(
+                subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
+                body: "See Jenkins console for output: ${env.BUILD_URL}console",
+                to: "divyani.jain12627@gmail.com"
+            )
         }
     }
 }
