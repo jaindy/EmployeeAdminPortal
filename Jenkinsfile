@@ -49,7 +49,7 @@ post {
             emailext(
                 subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
                 body: "See Jenkins console for output: ${env.BUILD_URL}console",
-                to: "divyani.jain12627@gmail.com"
+                to: 'divyani.jain12627@gmail.com'
             )
         }
     }
