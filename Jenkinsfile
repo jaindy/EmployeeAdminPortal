@@ -50,8 +50,8 @@ pipeline {
             subject: "${JOB_NAME}.${BUILD_NUMBER} FAILED",
             mimeType: 'text/html', // Use text/plain if you don't want HTML
             to: "divyani.jain12627@gmail.com",
-            body: "${JOB_NAME}.${BUILD_NUMBER} FAILED\n\nConsole Output:\n<pre>${BUILD_LOG, maxLines=9999, escapeHtml=false}</pre>"
-        )
+            body: "Build log: ${BUILD_LOG}"
+                  )
 
         }
     }
