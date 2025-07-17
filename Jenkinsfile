@@ -44,15 +44,21 @@ pipeline {
         }
     }
 
-    post {
+   post {
         always {
-            emailext(
-            subject: "${JOB_NAME}.${BUILD_NUMBER} FAILED",
-            mimeType: 'text/html', // Use text/plain if you don't want HTML
-            to: "divyani.jain12627@gmail.com",
-            body: "Build log: ${BUILD_LOG}"
-                  )
-
+            script {
+                // Capture and send console output
+                def consoleOutput = currentBuild.rawBuild.getLog(1000).join('\n')
+                emailext (
+                    subject: "Build ${currentBuild.fullDisplayName} - ${currentBuild.currentResult}",
+                    body: """
+                        <p>Build Status: ${currentBuild.currentResult}</p>
+                        <pre>${consoleOutput}</pre>
+                    """,
+                    mimeType: 'text/html',
+                    to: 'divyani.jain12627@gmail.com'
+                )
+            }
         }
     }
 }
